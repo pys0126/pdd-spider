@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拼多多</title>
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+    <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+</head>
+<body>
+    <div class="layui-container">
+        <div class="layui-row">
+
+            <div class="app" style="margin-top: 25%;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <h2>链接：</h2>
+                    </label>
+                    <div class="layui-input-block">
+                        <textarea id="url" placeholder="请输入URL" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button onclick="getSpider();" class="layui-btn layui-btn-fluid">提交</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+<script>
+    function getSpider() {
+        var url = document.getElementById("url").value;
+        if (url === "") {
+            alert("请输入内容！");
+        } else {
+            fetch("/spider", {
+                method: "POST",
+                mode: "cors",
+                body: JSON.stringify({
+                    "url": url
+                }),
+                headers: new Headers({
+                    "Content-Type": "application/json"
+                })
+            })
+            .then(response => response.json())
+            .then(json => console.log(json))
+            .catch(err => console.log('Request Failed', err));
+        }
+    }
+</script>
+</html>
